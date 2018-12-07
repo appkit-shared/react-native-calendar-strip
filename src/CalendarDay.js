@@ -24,6 +24,9 @@ export default class CalendarDay extends Component {
         weekendDateNameStyle: PropTypes.any,
         weekendDateNumberStyle: PropTypes.any,
 
+        highlightDateNameStyle: PropTypes.any,
+        highlightDateNumberStyle: PropTypes.any,
+
         selection: PropTypes.string,
         selectionAnimation: PropTypes.object
     };
@@ -94,11 +97,13 @@ export default class CalendarDay extends Component {
             }
         }
 
-        let dateNameStyle = [styles.dateName, this.props.dateNameStyle];
-        let dateNumberStyle = [styles.dateNumber, this.props.dateNumberStyle];
+        const customDateNameStyle = this.props.selected ? this.props.highlightDateNameStyle : this.props.dateNameStyle;
+        const customDateNumberStyle = this.props.selected ? this.props.highlightDateNumberStyle : this.props.dateNumberStyle;
+        let dateNameStyle = [styles.dateName, customDateNameStyle];
+        let dateNumberStyle = [styles.dateNumber, customDateNumberStyle];
         if (this.props.date.isoWeekday() === 6 || this.props.date.isoWeekday() === 7) {
-            dateNameStyle = [styles.weekendDateName, this.props.weekendDateNameStyle];
-            dateNumberStyle = [styles.weekendDateNumber, this.props.weekendDateNumberStyle];
+            dateNameStyle = [styles.weekendDateName, customDateNameStyle];
+            dateNumberStyle = [styles.weekendDateNumber, customDateNumberStyle];
         }
 
         return (

@@ -50,6 +50,9 @@ export default class CalendarStrip extends Component {
         weekendDateNameStyle: PropTypes.any,
         weekendDateNumberStyle: PropTypes.any,
 
+        highlightDateNameStyle: PropTypes.any,
+        highlightDateNumberStyle: PropTypes.any,
+
         locale: PropTypes.object
     };
 
@@ -250,6 +253,8 @@ export default class CalendarStrip extends Component {
                         dateNumberStyle={this.props.dateNumberStyle}
                         weekendDateNameStyle={this.props.weekendDateNameStyle}
                         weekendDateNumberStyle={this.props.weekendDateNumberStyle}
+                        highlightDateNameStyle={this.props.highlightDateNameStyle}
+                        highlightDateNumberStyle={this.props.highlightDateNumberStyle}
                         selection={this.props.selection}
                         selectionAnimation={this.props.selectionAnimation}
                         borderHighlightColor={this.props.borderHighlightColor}
