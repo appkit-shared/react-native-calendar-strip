@@ -1,35 +1,31 @@
 /**
  * Created by bogdanbegovic on 8/20/16.
  */
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { Animated, Easing, Text, TouchableOpacity } from 'react-native';
 
-import React, {Component} from 'react';
-import {
-    StyleSheet,
-    Text,
-    Animated,
-    Easing,
-    TouchableOpacity
-} from 'react-native';
 import styles from './Calendar.style.js';
+
 
 export default class CalendarDay extends Component {
 
     static propTypes = {
-        date: React.PropTypes.object.isRequired,
-        onDateSelected: React.PropTypes.func.isRequired,
-        selected: React.PropTypes.bool.isRequired,
+        date: PropTypes.object.isRequired,
+        onDateSelected: PropTypes.func.isRequired,
+        selected: PropTypes.bool.isRequired,
 
-        calendarColor: React.PropTypes.string,
-        highlightColor: React.PropTypes.string,
-        borderHighlightColor: React.PropTypes.string,
+        calendarColor: PropTypes.string,
+        highlightColor: PropTypes.string,
+        borderHighlightColor: PropTypes.string,
 
-        dateNameStyle: React.PropTypes.any,
-        dateNumberStyle: React.PropTypes.any,
-        weekendDateNameStyle: React.PropTypes.any,
-        weekendDateNumberStyle: React.PropTypes.any,
+        dateNameStyle: PropTypes.any,
+        dateNumberStyle: PropTypes.any,
+        weekendDateNameStyle: PropTypes.any,
+        weekendDateNumberStyle: PropTypes.any,
 
-        selection: React.PropTypes.string,
-        selectionAnimation: React.PropTypes.object
+        selection: PropTypes.string,
+        selectionAnimation: PropTypes.object
     };
 
     static defaultProps = {
@@ -85,14 +81,14 @@ export default class CalendarDay extends Component {
                 inputRange: [0, 1],
                 outputRange: [this.props.calendarColor, this.props.highlightColor]
             });
-            animObject = {backgroundColor: animValue};
+            animObject = { backgroundColor: animValue };
         } else {
             if (this.props.selection === 'border') {
                 animValue = this.animValue.interpolate({
                     inputRange: [0, 1],
                     outputRange: [0, this.props.selectionAnimation.borderWidth]
                 });
-                animObject = {borderColor: this.props.borderHighlightColor, borderWidth: animValue};
+                animObject = { borderColor: this.props.borderHighlightColor, borderWidth: animValue };
             } else {
                 throw new Error('CalendarDay Error! Type of animation is incorrect!');
             }

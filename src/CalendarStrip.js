@@ -1,19 +1,13 @@
 /**
  * Created by bogdanbegovic on 8/20/16.
  */
-
-import React, {Component} from 'react';
-import {
-    Text,
-    View,
-    Image,
-    Animated,
-    Easing,
-    TouchableOpacity
-} from 'react-native';
-import CalendarDay from './CalendarDay';
 import moment from 'moment';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { Animated, Easing, Image, Text, TouchableOpacity, View } from 'react-native';
+
 import styles from './Calendar.style.js';
+import CalendarDay from './CalendarDay';
 
 //Just a shallow array of 7 elements
 const arr = [];
@@ -27,36 +21,36 @@ for (let i = 0; i < 7; i++) {
 export default class CalendarStrip extends Component {
 
     static propTypes = {
-        style: React.PropTypes.any,
-        calendarColor: React.PropTypes.string,
-        highlightColor: React.PropTypes.string,
-        borderHighlightColor: React.PropTypes.string,
+        style: PropTypes.any,
+        calendarColor: PropTypes.string,
+        highlightColor: PropTypes.string,
+        borderHighlightColor: PropTypes.string,
 
-        startingDate: React.PropTypes.any,
-        selectedDate: React.PropTypes.any,
-        onDateSelected: React.PropTypes.func,
-        useIsoWeekday: React.PropTypes.bool,
+        startingDate: PropTypes.any,
+        selectedDate: PropTypes.any,
+        onDateSelected: PropTypes.func,
+        useIsoWeekday: PropTypes.bool,
 
-        iconLeft: React.PropTypes.any,
-        iconRight: React.PropTypes.any,
-        iconStyle: React.PropTypes.any,
-        iconLeftStyle: React.PropTypes.any,
-        iconRightStyle: React.PropTypes.any,
-        iconContainer: React.PropTypes.any,
+        iconLeft: PropTypes.any,
+        iconRight: PropTypes.any,
+        iconStyle: PropTypes.any,
+        iconLeftStyle: PropTypes.any,
+        iconRightStyle: PropTypes.any,
+        iconContainer: PropTypes.any,
 
-        calendarHeaderStyle: React.PropTypes.any,
-        calendarHeaderFormat: React.PropTypes.string,
+        calendarHeaderStyle: PropTypes.any,
+        calendarHeaderFormat: PropTypes.string,
 
-        calendarAnimation: React.PropTypes.object,
-        selection: React.PropTypes.string,
-        selectionAnimation: React.PropTypes.object,
+        calendarAnimation: PropTypes.object,
+        selection: PropTypes.string,
+        selectionAnimation: PropTypes.object,
 
-        dateNameStyle: React.PropTypes.any,
-        dateNumberStyle: React.PropTypes.any,
-        weekendDateNameStyle: React.PropTypes.any,
-        weekendDateNumberStyle: React.PropTypes.any,
+        dateNameStyle: PropTypes.any,
+        dateNumberStyle: PropTypes.any,
+        weekendDateNameStyle: PropTypes.any,
+        weekendDateNumberStyle: PropTypes.any,
 
-        locale: React.PropTypes.object
+        locale: PropTypes.object
     };
 
     static defaultProps = {
@@ -70,8 +64,8 @@ export default class CalendarStrip extends Component {
     constructor(props) {
         super(props);
 
-        if(props.locale) {
-            if(props.locale.name && props.locale.config) {
+        if (props.locale) {
+            if (props.locale.name && props.locale.config) {
                 moment.locale(props.locale.name, props.locale.config);
             } else {
                 throw new Error('Locale prop is not in the correct format. \b Locale has to be in form of object, with params NAME and CONFIG!');
@@ -134,12 +128,12 @@ export default class CalendarStrip extends Component {
 
     //Set startingDate to the previous week
     getPreviousWeek() {
-        this.setState({startingDate: this.state.startingDate.subtract(1, 'w')});
+        this.setState({ startingDate: this.state.startingDate.subtract(1, 'w') });
     }
 
     //Set startingDate to the next week
     getNextWeek() {
-        this.setState({startingDate: this.state.startingDate.add(1, 'w')});
+        this.setState({ startingDate: this.state.startingDate.add(1, 'w') });
     }
 
     //Get dates for the week based on the startingDate
@@ -152,10 +146,10 @@ export default class CalendarStrip extends Component {
         arr.forEach((item, index) => {
             let date;
             if (me.props.useIsoWeekday) {
-              date = me.setLocale(moment(startDate.isoWeekday(index + 1)));
+                date = me.setLocale(moment(startDate.isoWeekday(index + 1)));
             }
             else {
-              date = me.setLocale(moment(startDate).add(index, 'days'));
+                date = me.setLocale(moment(startDate).add(index, 'days'));
             }
             dates.push(date);
         });
@@ -164,7 +158,7 @@ export default class CalendarStrip extends Component {
 
     //Handling press on date/selecting date
     onDateSelected(date) {
-        this.setState({selectedDate: date});
+        this.setState({ selectedDate: date });
         if (this.props.onDateSelected) {
             this.props.onDateSelected(date);
         }
@@ -244,7 +238,7 @@ export default class CalendarStrip extends Component {
                 opacityAnim = this.animatedValue[index];
             }
             return (
-                <Animated.View key={date} style={{opacity: opacityAnim, flex: 1}}>
+                <Animated.View key={date} style={{ opacity: opacityAnim, flex: 1 }}>
                     <CalendarDay
                         date={date}
                         key={date}
@@ -264,17 +258,17 @@ export default class CalendarStrip extends Component {
             );
         });
         return (
-            <View style={[styles.calendarContainer, {backgroundColor: this.props.calendarColor}, this.props.style]}>
+            <View style={[styles.calendarContainer, { backgroundColor: this.props.calendarColor }, this.props.style]}>
                 <Text style={[styles.calendarHeader, this.props.calendarHeaderStyle]}>{this.formatCalendarHeader()}</Text>
                 <View style={styles.datesStrip}>
                     <TouchableOpacity style={[styles.iconContainer, this.props.iconContainer]} onPress={this.getPreviousWeek}>
-                        <Image style={[styles.icon, this.props.iconStyle, this.props.iconLeftStyle]} source={this.props.iconLeft}/>
+                        <Image style={[styles.icon, this.props.iconStyle, this.props.iconLeftStyle]} source={this.props.iconLeft} />
                     </TouchableOpacity>
                     <View style={styles.calendarDates}>
                         {datesRender}
                     </View>
                     <TouchableOpacity style={[styles.iconContainer, this.props.iconContainer]} onPress={this.getNextWeek}>
-                        <Image style={[styles.icon, this.props.iconStyle, this.props.iconRightStyle]} source={this.props.iconRight}/>
+                        <Image style={[styles.icon, this.props.iconStyle, this.props.iconRightStyle]} source={this.props.iconRight} />
                     </TouchableOpacity>
                 </View>
             </View>
